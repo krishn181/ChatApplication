@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat Application</title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>{{group}} Group</h1>
+        </div>
+        <div class="text-area">
+            <textarea name="" id="chat-container">
+                {% for chat in chats  %}
+                    {{chat.content}}
+                {% endfor %}
+            </textarea><br>
+        </div>
+        <div class="input-field">
+            <input type="text" name="" id="message-field"><br>
+        </div>
+        <div class="send-button">
+            <button type="submit" id="submit-text">Send</button>
+        </div>
+    </div>
+
+    {{group.name|json_script:"group_name"}}
+    
+    <script src="{% static "script.js" %}"></script>
+</body>
+</html>
