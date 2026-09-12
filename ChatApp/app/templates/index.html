@@ -13,7 +13,7 @@
         <div class="text-area">
             <textarea name="" id="chat-container">
                 {% for chat in chats  %}
-                    {{chat.content}}
+                    {{chat.user.username}}: {{chat.content}}
                 {% endfor %}
             </textarea><br>
         </div>

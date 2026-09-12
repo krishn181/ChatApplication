@@ -27,14 +27,16 @@ class MySyncConsumer(SyncConsumer):
             group = Group.objects.get(name = self.group)
         except Group.DoesNotExist:
             return
-
+        username = self.scope['user'].username
         if self.scope['user'].is_authenticated:
-            chat = Chat(content=message, group=group)
+            chat = Chat(content=message, group=group, user = self.scope['user'])
             chat.save()
+            
             async_to_sync(self.channel_layer.group_send)(self.group,
                 {
                     'type':'chat.message',
                     'message':message,
+                    'username':username,
                 }
             )
 
@@ -47,9 +49,10 @@ class MySyncConsumer(SyncConsumer):
 
     def chat_message(self, event):
         message = event['message']
+        username = event['username']
         self.send({ 
                     'type':'websocket.send',
-                    'text':json.dumps({'msg':message})
+                    'text':json.dumps({'msg':message, 'username':username}),                    
                     }
                 )    
 

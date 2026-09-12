@@ -14,7 +14,7 @@ ws.onmessage = function (event) {
     console.log("Message from server...", event)
     console.log("message .....", event.data)
     const data = JSON.parse(event.data)
-    document.getElementById("chat-container").value += data.msg + "\n"
+    document.getElementById("chat-container").value += data.msg + ":" + data.username + "\n"
 
 }
 ws.onclose = function () {
